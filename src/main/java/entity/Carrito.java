@@ -8,6 +8,7 @@ public class Carrito {
 
 	
 	private Date fecha;
+	private int id;
 
 	Hashtable<Producto,Integer> pedido; 
 
