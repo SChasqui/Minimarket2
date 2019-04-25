@@ -10,7 +10,7 @@ public class Carrito {
 	private Date fecha;
 	private int id;
 
-	Hashtable<Producto,Integer> pedido; 
+	private Hashtable<Producto,Integer> pedido; 
 
 
 	public Carrito(Date fecha) {
@@ -37,6 +37,11 @@ public class Carrito {
 		return fecha.getYear()+"-"+fecha.getMonth()+"-"+fecha.getDay();
 	}
 
+	public Hashtable<Producto, Integer> getPedido() {
+		return pedido;
+	}
+
+	
 	
 
 }
