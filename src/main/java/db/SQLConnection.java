@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 
 import entity.Carrito;
@@ -76,6 +78,29 @@ public class SQLConnection {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public int consultaDiaria(Date fecha) {
+		ArrayList<Producto> productosVendidos = new ArrayList<Producto>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String fechaComoCadena = sdf.format(fecha);
+		
+		int ventaDiaria = 0;
+		try {
+			ResultSet resultados = statement.executeQuery("SELECT producto.nombre,producto.precio, producto.precio,cantidad,fecha FROM carrito_tiene_productos INNER JOIN carrito ON carrito_tiene_productos.carritoID = carrito.id INNER JOIN producto ON producto.id = carrito_tiene_productos.productoID  WHERE fecha ='"+fechaComoCadena+"'");
+			
+			while (resultados.next()) {
+				
+				Producto tempProd = new Producto(resultados.getString(1) , resultados.getInt(2) );
+				
+				ventaDiaria+= tempProd.getPrecio() * resultados.getInt(4);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ventaDiaria;
+		
 	}
 	
 
