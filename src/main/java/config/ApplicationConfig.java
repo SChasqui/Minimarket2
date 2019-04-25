@@ -12,7 +12,7 @@ public class ApplicationConfig extends Application{
 	@Override
 	public Set<Class<?>> getClasses() {
 		Set<Class<?>> recursos = new HashSet<Class<?>>();
-
+		recursos.add(services.carritoResources.class);
 		return recursos;
 	}
 
