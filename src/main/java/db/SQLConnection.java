@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import entity.Carrito;
 import entity.Producto;
@@ -45,9 +46,11 @@ public class SQLConnection {
 	public ArrayList<Producto> getAllProductos() {
 		ArrayList<Producto> output = new ArrayList<Producto>();
 		try {
-			ResultSet resultados = statement.executeQuery("SELECT nombre,precio FROM productos");
+			ResultSet resultados = statement.executeQuery("SELECT id,nombre,precio FROM productos");
 			while (resultados.next()) {
-				output.add(  new Producto(resultados.getString(2) , resultados.getInt(1) ));
+				Producto tempProd = new Producto(resultados.getString(2) , resultados.getInt(3) );
+				tempProd.setId(resultados.getInt(1));
+				output.add(tempProd);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -61,13 +64,19 @@ public class SQLConnection {
 		try {
 			statement.execute("INSERT INTO carrito(fecha) VALUES ('"+carrito.getFecha()+"')");
 			
-			statement.execute("INSERT INTO carrito(fecha) VALUES ('"+carrito.getFecha()+"')");
-			statement.execute("INSERT INTO carrito(fecha) VALUES ('"+carrito.getFecha()+"')");
+			Hashtable<Producto, Integer> hashTemp = carrito.getPedido();
+			
+			for (Producto key: hashTemp.keySet()) {
+				
+				int cantidad = hashTemp.get(key);
+				statement.execute("INSERT INTO carrito_tiene_productos(carritoID,productoID, cantidad) VALUES (LAST_INSERT_ID(), "+key.getId()+","+cantidad+"))");
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
+	
 
 }
