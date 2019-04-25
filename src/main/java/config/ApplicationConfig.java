@@ -13,7 +13,6 @@ public class ApplicationConfig extends Application{
 	public Set<Class<?>> getClasses() {
 		Set<Class<?>> recursos = new HashSet<Class<?>>();
 
-		//sda
 		return recursos;
 	}
 
