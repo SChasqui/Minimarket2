@@ -6,7 +6,14 @@ public class Producto {
 	
 	private String nombre;
 	private int precio;
+	private int id;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public Producto(String nombre, int precio) {
 		
 		this.nombre = nombre;
